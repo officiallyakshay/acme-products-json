@@ -11,6 +11,11 @@ const db = require ('./db')('./products.json', (item, items) => {
   }
 });
 
+app.use((req, res, next) => {
+  console.log(`you called ${req.url} as a ${req.method}`)
+  next();
+});
+
 app.use(express.json());
 
 app.get('/', (req, res, next) => {
