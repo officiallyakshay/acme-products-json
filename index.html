@@ -33,9 +33,13 @@ input, button{
             error: ''
           };
           this.createProduct = this.createProduct.bind(this);
+          this.destroyProduct = this.destroyProduct.bind(this);
         }
         async componentDidMount(){
           this.setState({ products: ( await axios.get('/api/products')).data});
+        }
+        async destroyProduct() {
+          this.setState({ products: products.filter( product => product.name !== name ) });
         }
         async createProduct() {
           const products = [...this.state.products, (await axios.post('/api/products', { name: this.state.name })).data];
@@ -43,7 +47,7 @@ input, button{
         }
         render(){
           const { products, name, error, price } = this.state;
-          const { createProduct } = this;
+          const { createProduct, destroyProduct } = this;
           return (
             <div>
               <h1>Acme Products</h1>
@@ -55,7 +59,7 @@ input, button{
               </div>
               <ul>
                 {
-                  products.map( product => <li onClick={()=> console.log('TO DO Destroy')} key={ product.id }>
+                  products.map( product => <li onClick={ destroyProduct } key={ product.id }>
                     <div>{ product.name }</div>
                   </li>)
                 }
