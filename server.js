@@ -12,7 +12,7 @@ const db = require ('./db')('./products.json', (item, items) => {
 });
 
 app.use((req, res, next) => {
-  console.log(`you called ${req.url} as a ${req.method}`)
+  // console.log(`you called ${req.url} as a ${req.method}`)
   next();
 });
 
@@ -23,6 +23,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/api/products', async (req, res, next) => {
+  console.log('foo');
   try {
     res.send(await db.findAll());
   }
@@ -35,8 +36,8 @@ app.post('/api/products', async (req, res, next) => {
   try {
     res.send(await db.create(req.body));
   }
-  catch (ex) {
-    next (ex);
+  catch(ex) {
+    next(ex);
   }
 });
 
